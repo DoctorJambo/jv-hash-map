@@ -65,8 +65,14 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         return size;
     }
 
-    @Override
-    public void resize() {
+    private int getIndex(K key) {
+        if (key == null) {
+            return 0;
+        }
+        return (key.hashCode() & 0x7FFFFFFF) % capacity;
+    }
+
+    private void resize() {
         if (capacity >= MAXIMUM_CAPACITY) {
             threshold = Integer.MAX_VALUE;
             return;
@@ -94,13 +100,6 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
                 current = next;
             }
         }
-    }
-
-    private int getIndex(K key) {
-        if (key == null) {
-            return 0;
-        }
-        return (key.hashCode() & 0x7FFFFFFF) % capacity;
     }
 
     private static class MyNode<K, V> {
