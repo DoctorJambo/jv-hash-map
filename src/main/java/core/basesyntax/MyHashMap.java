@@ -1,9 +1,9 @@
 package core.basesyntax;
 
 public class MyHashMap<K, V> implements MyMap<K, V> {
-    static final int DEFAULT_INITIAL_CAPACITY = 16;
-    static final float DEFAULT_LOAD_FACTOR = 0.75f;
-    static final int MAXIMUM_CAPACITY = 1 << 30;
+    public static final int DEFAULT_INITIAL_CAPACITY = 16;
+    public static final float DEFAULT_LOAD_FACTOR = 0.75f;
+    public static final int MAXIMUM_CAPACITY = 1 << 30;
 
     private int size;
     private int capacity = DEFAULT_INITIAL_CAPACITY;
@@ -65,13 +65,7 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         return size;
     }
 
-    private int getIndex(K key) {
-        if (key == null) {
-            return 0;
-        }
-        return (key.hashCode() & 0x7FFFFFFF) % capacity;
-    }
-
+    @Override
     public void resize() {
         if (capacity >= MAXIMUM_CAPACITY) {
             threshold = Integer.MAX_VALUE;
@@ -102,7 +96,14 @@ public class MyHashMap<K, V> implements MyMap<K, V> {
         }
     }
 
-    static class MyNode<K, V> {
+    private int getIndex(K key) {
+        if (key == null) {
+            return 0;
+        }
+        return (key.hashCode() & 0x7FFFFFFF) % capacity;
+    }
+
+    private static class MyNode<K, V> {
         private final int hash;
         private final K key;
         private V value;
